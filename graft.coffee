@@ -4,7 +4,7 @@
 #	A relational data extension for Backbone.js
 #	(in case you want one)
 #	
-#	Freely distributed under a "don't be evil" license
+#	Freely distributed under MIT license.
 
 
 # Graft can only run if Backbone is present
