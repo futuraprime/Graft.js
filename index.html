@@ -73,9 +73,9 @@ will fail.</p>             </td>             <td class="code">               <di
 			<span class="k">return</span> <span class="kc">false</span>
 		
 		<span class="nv">joined = </span><span class="k">new</span> <span class="nx">Graft</span><span class="p">.</span><span class="nx">Collection</span>											<span class="c1"># the result collection</span>
-		</pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Start by dumping the current collection in.
-We'll do this iteratively to shift everything into Graft.Joined models.</p>             </td>             <td class="code">               <div class="highlight"><pre>		<span class="k">this</span><span class="p">.</span><span class="nx">each</span> <span class="nf">( member ) -&gt;</span>
-			<span class="nx">joined</span><span class="p">.</span><span class="nx">add</span> <span class="k">new</span> <span class="nx">Graft</span><span class="p">.</span><span class="nx">Joined</span> <span class="nx">member</span><span class="p">,</span> <span class="nv">as: </span><span class="nx">as</span><span class="p">,</span> <span class="nv">join: </span><span class="kc">true</span>
+		
+		<span class="k">this</span><span class="p">.</span><span class="nx">each</span> <span class="nf">( member ) -&gt;</span>													<span class="c1"># Start by dumping the current collection in.</span>
+			<span class="nx">joined</span><span class="p">.</span><span class="nx">add</span> <span class="k">new</span> <span class="nx">Graft</span><span class="p">.</span><span class="nx">Joined</span> <span class="nx">member</span><span class="p">,</span> <span class="nv">as: </span><span class="nx">as</span><span class="p">,</span> <span class="nv">join: </span><span class="kc">true</span>				<span class="c1"># We&#39;ll do this iteratively to shift everything into Graft.Joined models.</span>
 		
 		<span class="k">for</span> <span class="nx">order</span> <span class="k">in</span> <span class="nx">joinOrders</span>													<span class="c1"># iterate over the join orders</span>
 			<span class="nx">do</span> <span class="p">(</span> <span class="nx">order</span> <span class="p">)</span> <span class="o">=&gt;</span>														<span class="c1"># make sure we have a well-formed join order</span>
@@ -87,13 +87,12 @@ We'll do this iteratively to shift everything into Graft.Joined models.</p>     
 				<span class="nv">name = </span><span class="nx">order</span><span class="p">.</span><span class="nx">fromName</span> <span class="o">?</span> <span class="nx">as</span>										<span class="c1"># default the fromName</span>
 			
 				<span class="nx">joined</span><span class="p">.</span><span class="nx">each</span> <span class="nf">( member ) -&gt;</span>										<span class="c1"># great! let&#39;s get joining</span>
-					</pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p>First we pull all the elements that match this element
-out of the collection we're bringing in.</p>             </td>             <td class="code">               <div class="highlight"><pre>					<span class="nv">matches = </span><span class="nx">order</span><span class="p">.</span><span class="nx">linkCollection</span><span class="p">.</span><span class="nx">_findByAttribute</span> <span class="nx">order</span><span class="p">.</span><span class="nx">linkKey</span><span class="p">,</span> <span class="nx">member</span><span class="p">.</span><span class="nx">get</span> <span class="nx">name</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="nx">order</span><span class="p">.</span><span class="nx">fromKey</span>
 					
-					<span class="nv">memberItems = </span><span class="nx">member</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span>
-					</pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>Now iterate over the matches and create unified result join models.
-We append it to the preexisting "joined" collection.</p>             </td>             <td class="code">               <div class="highlight"><pre>					<span class="k">for</span> <span class="nx">match</span> <span class="k">in</span> <span class="nx">matches</span>
-						<span class="nx">do</span> <span class="nf">( match ) -&gt;</span>
+					<span class="nv">matches = </span><span class="nx">order</span><span class="p">.</span><span class="nx">linkCollection</span><span class="p">.</span><span class="nx">_findByAttribute</span> <span class="nx">order</span><span class="p">.</span><span class="nx">linkKey</span><span class="p">,</span> <span class="nx">member</span><span class="p">.</span><span class="nx">get</span> <span class="nx">name</span><span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="o">+</span><span class="nx">order</span><span class="p">.</span><span class="nx">fromKey</span>		<span class="c1"># First we pull all the elements that match this element</span>
+					<span class="nv">memberItems = </span><span class="nx">member</span><span class="p">.</span><span class="nx">toJSON</span><span class="p">()</span>																			<span class="c1"># out of the collection we&#39;re bringing in.</span>
+					
+					<span class="k">for</span> <span class="nx">match</span> <span class="k">in</span> <span class="nx">matches</span>										<span class="c1"># Now iterate over the matches and create unified result join models.</span>
+						<span class="nx">do</span> <span class="nf">( match ) -&gt;</span>											<span class="c1"># We append it to the preexisting &quot;joined&quot; collection.</span>
 							<span class="nv">joinMember = </span><span class="k">new</span> <span class="nx">Graft</span><span class="p">.</span><span class="nx">Joined</span>
 							
 							<span class="nv">joinData = </span><span class="nx">memberItems</span>								<span class="c1"># start with the join set</span>
@@ -104,7 +103,7 @@ We append it to the preexisting "joined" collection.</p>             </td>      
 							
 				<span class="nv">joined = </span><span class="nx">_joined_</span>												<span class="c1"># overwrite the old joined</span>
 				
-		<span class="k">return</span> <span class="nx">joined</span>															<span class="c1"># and finally, return the join</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>This sends Graft into "overrun" mode, which makes Graft overwrite the standard
+		<span class="k">return</span> <span class="nx">joined</span>															<span class="c1"># and finally, return the join</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>This sends Graft into "overrun" mode, which makes Graft overwrite the standard
 model and controller. This lets you write more convenient code, but it could screw
 other things up, if they depend on the standard implementations of Backbone's
 model and controller. Use at your own risk.</p>
