@@ -1,0 +1,1 @@
+Graft is a simple extension of Backbone.js that lets you make relational data calls. It's written in CoffeeScript.
