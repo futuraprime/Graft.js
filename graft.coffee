@@ -98,10 +98,8 @@ Graft.Collection = R.Collection.extend
 		
 		joined = new Graft.Collection											# the result collection
 		
-		# Start by dumping the current collection in.
-		# We'll do this iteratively to shift everything into Graft.Joined models.
-		this.each ( member ) ->
-			joined.add new Graft.Joined member, as: as, join: true
+		this.each ( member ) ->													# Start by dumping the current collection in.
+			joined.add new Graft.Joined member, as: as, join: true				# We'll do this iteratively to shift everything into Graft.Joined models.
 		
 		for order in joinOrders													# iterate over the join orders
 			do ( order ) =>														# make sure we have a well-formed join order
@@ -114,16 +112,11 @@ Graft.Collection = R.Collection.extend
 			
 				joined.each ( member ) ->										# great! let's get joining
 					
-					# First we pull all the elements that match this element
-					# out of the collection we're bringing in.
-					matches = order.linkCollection._findByAttribute order.linkKey, member.get name+'.'+order.fromKey
+					matches = order.linkCollection._findByAttribute order.linkKey, member.get name+'.'+order.fromKey		# First we pull all the elements that match this element
+					memberItems = member.toJSON()																			# out of the collection we're bringing in.
 					
-					memberItems = member.toJSON()
-					
-					# Now iterate over the matches and create unified result join models.
-					# We append it to the preexisting "joined" collection.
-					for match in matches
-						do ( match ) ->
+					for match in matches										# Now iterate over the matches and create unified result join models.
+						do ( match ) ->											# We append it to the preexisting "joined" collection.
 							joinMember = new Graft.Joined
 							
 							joinData = memberItems								# start with the join set
