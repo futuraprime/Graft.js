@@ -1,14 +1,16 @@
 (function() {
-  var Graft, R;
+  var Backbone, Graft, R;
   var __indexOf = Array.prototype.indexOf || function(item) {
     for (var i = 0, l = this.length; i < l; i++) {
       if (this[i] === item) return i;
     }
     return -1;
   }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __slice = Array.prototype.slice;
-  if (typeof Backbone != "undefined" && Backbone !== null) {
+  if (!(window.Backbone != null)) {
+    throw "Backbone is not running!";
     return false;
   }
+  Backbone = window.Backbone;
   Graft = Backbone.Graft = {};
   R = Graft.Reference = {};
   R.Model = Backbone.Model;

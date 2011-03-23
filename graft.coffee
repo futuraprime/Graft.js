@@ -7,11 +7,14 @@
 #	Freely distributed under a "don't be evil" license
 
 
-
 # Graft can only run if Backbone is present
-if Backbone? then return false
+if not window.Backbone?
+	throw "Backbone is not running!"
+	return false
 
-Graft = Backbone.Graft = {};
+Backbone = window.Backbone
+
+Graft = Backbone.Graft = {}
 
 # Create a home for the original (reference) implementations
 # in case we opt to overwrite them later.
